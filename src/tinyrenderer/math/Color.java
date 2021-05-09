@@ -1,4 +1,4 @@
-package tinyrenderer.core;
+package tinyrenderer.math;
 
 public class Color 
 {

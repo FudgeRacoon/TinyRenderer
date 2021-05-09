@@ -6,6 +6,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import tinyrenderer.Application;
 import tinyrenderer.geometry.IRenderable;
+import tinyrenderer.math.Color;
 
 /**
  * The {@code FrameBuffer} class stores pixel data that are used

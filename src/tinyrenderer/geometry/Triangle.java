@@ -1,7 +1,7 @@
 package tinyrenderer.geometry;
 
 import tinyrenderer.Application;
-import tinyrenderer.core.Color;
+import tinyrenderer.math.Color;
 import tinyrenderer.math.Vector2;
 
 public class Triangle implements IRenderable

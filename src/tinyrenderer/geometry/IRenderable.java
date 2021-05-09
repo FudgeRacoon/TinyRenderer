@@ -1,6 +1,6 @@
 package tinyrenderer.geometry;
 
-import tinyrenderer.core.Color;
+import tinyrenderer.math.Color;
 
 public interface IRenderable 
 {   
