@@ -40,35 +40,35 @@ public class Engine implements IApplication
     {
         Vector3[] vertices = 
         {
-            new Vector3(-0.5f,  0.5f, -0.5f), //0
-            new Vector3( 0.5f,  0.5f, -0.5f), //1
-            new Vector3( 0.5f, -0.5f, -0.5f), //2
-            new Vector3(-0.5f, -0.5f, -0.5f), //3
-            new Vector3( 0.5f,  0.5f,  0.5f), //4
-            new Vector3( 0.5f, -0.5f,  0.5f), //5
-            new Vector3(-0.5f,  0.5f,  0.5f), //6
-            new Vector3(-0.5f, -0.5f,  0.5f)  //7
+            new Vector3(-1.0f, -1.0f,  1.0f), //0
+            new Vector3( 1.0f, -1.0f,  1.0f), //1
+            new Vector3( 1.0f,  1.0f,  1.0f), //2
+            new Vector3(-1.0f,  1.0f,  1.0f), //3
+            new Vector3(-1.0f, -1.0f, -1.0f), //4
+            new Vector3( 1.0f, -1.0f, -1.0f), //5
+            new Vector3( 1.0f,  1.0f, -1.0f), //6
+            new Vector3(-1.0f,  1.0f, -1.0f)  //7
         };
 
         int[] indices = 
         {
             0, 1, 2,
             2, 3, 0,
-
-            1, 4, 5,
-            5, 2, 1,
-
-            0, 3, 6,
-            6, 3, 7,
-
-            6, 7, 4,
-            4, 7, 5,
-
-            0, 1, 4,
-            4, 6, 0,
-
-            3, 2, 5,
-            5, 7, 3
+            
+            1, 5, 6,
+            6, 2, 1,
+            
+            7, 6, 5,
+            5, 4, 7,
+            
+            4, 0, 3,
+            3, 7, 4,
+            
+            4, 5, 1,
+            1, 0, 4,
+            
+            3, 2, 6,
+            6, 7, 3
         };
 
         ArrayList<Vector3> v = new ArrayList<>();
@@ -92,15 +92,13 @@ public class Engine implements IApplication
             {
                 CalculateDelaTime(currentNanoTime);
 
-                FrameBuffer frameBuffer = Application.GetFrameBuffer();
-
-                frameBuffer.ClearBuffer(Color.BLACK);
+                Application.GetFrameBuffer().ClearBuffer(Color.BLACK);
                 
                 //Update objects
                 cube.UpdateMesh();
-                frameBuffer.DrawPolygon(cube, Color.RED, false);
+                Application.GetFrameBuffer().DrawPolygon(cube, Color.RED, false);
 
-                frameBuffer.RenderBuffer();
+                Application.GetFrameBuffer().RenderBuffer();
             }    
         }.start();
     }

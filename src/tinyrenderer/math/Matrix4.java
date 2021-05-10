@@ -37,7 +37,7 @@ public class Matrix4
     {
         return n[row][column];
     }
-    public Matrix4 Add(Matrix4 m1, Matrix4 m2)
+    public static Matrix4 Add(Matrix4 m1, Matrix4 m2)
     {
         return new Matrix4
         (
@@ -47,7 +47,7 @@ public class Matrix4
             m1.Get(3, 0) + m2.Get(3, 0), m1.Get(3, 1) + m2.Get(3, 1), m1.Get(3, 2) + m2.Get(3, 2), m1.Get(3, 3) + m2.Get(3, 3)
         );
     }
-    public Matrix4 Sub(Matrix4 m1, Matrix4 m2)
+    public static Matrix4 Sub(Matrix4 m1, Matrix4 m2)
     {
         return new Matrix4
         (
@@ -57,20 +57,32 @@ public class Matrix4
             m1.Get(3, 0) - m2.Get(3, 0), m1.Get(3, 1) - m2.Get(3, 1), m1.Get(3, 2) - m2.Get(3, 2), m1.Get(3, 3) - m2.Get(3, 3)
         );
     }
-    public Matrix4 Mult(Matrix4 m1, Matrix4 m2)
+    public static Matrix4 Mult(Matrix4 m1, Matrix4 m2)
     {
-        Matrix4 result = new Matrix4();
+        return new Matrix4
+        (
+            m1.Get(0, 0) * m2.Get(0, 0) + m1.Get(0, 1) * m2.Get(1,0) + m1.Get(0, 2) * m2.Get(2,0) + m1.Get(0, 3) * m2.Get(3,0),
+            m1.Get(0, 0) * m2.Get(0, 1) + m1.Get(0, 1) * m2.Get(1,1) + m1.Get(0, 2) * m2.Get(2,1) + m1.Get(0, 3) * m2.Get(3,1),
+            m1.Get(0, 0) * m2.Get(0, 2) + m1.Get(0, 1) * m2.Get(1,2) + m1.Get(0, 2) * m2.Get(2,2) + m1.Get(0, 3) * m2.Get(3,2),
+            m1.Get(0, 0) * m2.Get(0, 3) + m1.Get(0, 1) * m2.Get(1,3) + m1.Get(0, 2) * m2.Get(2,3) + m1.Get(0, 3) * m2.Get(3,3),
 
-        for(int row = 0; row < ROWS; row++)
-            for(int column = 0; column < COLOUMNS; column++)
-            {
-                float data = m1.Get(row, column) * m2.Get(column, row);
-                result.n[row][column] = data;
-            }
+            m1.Get(1, 0) * m2.Get(0, 0) + m1.Get(1, 1) * m2.Get(1,0) + m1.Get(1, 2) * m2.Get(2,0) + m1.Get(1, 3) * m2.Get(3,0),
+            m1.Get(1, 0) * m2.Get(0, 1) + m1.Get(1, 1) * m2.Get(1,1) + m1.Get(1, 2) * m2.Get(2,1) + m1.Get(1, 3) * m2.Get(3,1),
+            m1.Get(1, 0) * m2.Get(0, 2) + m1.Get(1, 1) * m2.Get(1,2) + m1.Get(1, 2) * m2.Get(2,2) + m1.Get(1, 3) * m2.Get(3,2),
+            m1.Get(1, 0) * m2.Get(0, 3) + m1.Get(1, 1) * m2.Get(1,3) + m1.Get(1, 2) * m2.Get(2,3) + m1.Get(1, 3) * m2.Get(3,3),
 
-        return result;
+            m1.Get(2, 0) * m2.Get(0, 0) + m1.Get(2, 1) * m2.Get(1,0) + m1.Get(2, 2) * m2.Get(2,0) + m1.Get(2, 3) * m2.Get(3,0),
+            m1.Get(2, 0) * m2.Get(0, 1) + m1.Get(2, 1) * m2.Get(1,1) + m1.Get(2, 2) * m2.Get(2,1) + m1.Get(2, 3) * m2.Get(3,1),
+            m1.Get(2, 0) * m2.Get(0, 2) + m1.Get(2, 1) * m2.Get(1,2) + m1.Get(2, 2) * m2.Get(2,2) + m1.Get(2, 3) * m2.Get(3,2),
+            m1.Get(2, 0) * m2.Get(0, 3) + m1.Get(2, 1) * m2.Get(1,3) + m1.Get(2, 2) * m2.Get(2,3) + m1.Get(2, 3) * m2.Get(3,3),
+
+            m1.Get(3, 0) * m2.Get(0, 0) + m1.Get(3, 1) * m2.Get(1,0) + m1.Get(3, 2) * m2.Get(2,0) + m1.Get(3, 3) * m2.Get(3,0),
+            m1.Get(3, 0) * m2.Get(0, 1) + m1.Get(3, 1) * m2.Get(1,1) + m1.Get(3, 2) * m2.Get(2,1) + m1.Get(3, 3) * m2.Get(3,1),
+            m1.Get(3, 0) * m2.Get(0, 2) + m1.Get(3, 1) * m2.Get(1,2) + m1.Get(3, 2) * m2.Get(2,2) + m1.Get(3, 3) * m2.Get(3,2),
+            m1.Get(3, 0) * m2.Get(0, 3) + m1.Get(3, 1) * m2.Get(1,3) + m1.Get(3, 2) * m2.Get(2,3) + m1.Get(3, 3) * m2.Get(3,3)
+        );
     }
-    public Vector4 Mult(Matrix4 m, Vector4 v)
+    public static Vector4 Mult(Matrix4 m, Vector4 v)
     {
        return new Vector4
        (
@@ -117,26 +129,32 @@ public class Matrix4
 
         if(axis.x == 1 && axis.y == 0 && axis.z == 0)
         {
-            m.n[1][1] = Math.cos(Math.toRadians(angle));
-            m.n[1][2] = Math.sin(Math.toRadians(angle));
-            m.n[2][1] = -Math.sin(Math.toRadians(angle));
-            m.n[2][2] = Math.cos(Math.toRadians(angle));
+            m.n[1][1] = (float)Math.cos(Math.toRadians(angle));
+            m.n[1][2] = (float)Math.sin(Math.toRadians(angle));
+            m.n[2][1] = (float)-Math.sin(Math.toRadians(angle));
+            m.n[2][2] = (float)Math.cos(Math.toRadians(angle));
 
             return m;
         }
         else if(axis.x == 0 && axis.y == 1 && axis.z == 0)
         {
-            m.n[0][0] = Math.cos(Math.toRadians(angle));
-            m.n[0][2] = -Math.sin(Math.toRadians(angle));
-            m.n[2][0] = Math.sin(Math.toRadians(angle));
-            m.m[2][2] = Math.cos(Math.toRadians(angle));
+            m.n[0][0] = (float)Math.cos(Math.toRadians(angle));
+            m.n[0][2] = (float)-Math.sin(Math.toRadians(angle));
+            m.n[2][0] = (float)Math.sin(Math.toRadians(angle));
+            m.n[2][2] = (float)Math.cos(Math.toRadians(angle));
+
+            return m;
         }
         else if(axis.x == 0 && axis.y == 0 && axis.z == 1)
         {
-            m.n[0][0] = Math.cos(Math.toRadians(angle));
-            m.n[0][1] = -Math.sin(Math.toRadians(angle));
-            m.n[1][0] = Math.sin(Math.toRadians(angle));
-            m.n[1][1] = Math.cos(Math.toRadians(angle));
+            m.n[0][0] = (float)Math.cos(Math.toRadians(angle));
+            m.n[0][1] = (float)-Math.sin(Math.toRadians(angle));
+            m.n[1][0] = (float)Math.sin(Math.toRadians(angle));
+            m.n[1][1] = (float)Math.cos(Math.toRadians(angle));
+
+            return m;
         }
+        else
+            return m;
     }
 }

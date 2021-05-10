@@ -12,6 +12,8 @@ public class Mesh implements IRenderable
     private ArrayList<Integer> indices;
     private ArrayList<Triangle> triangles;
 
+    public static float c = 3;
+
     public Mesh(ArrayList<Vector3> vertices, ArrayList<Integer> indices)
     {
         this.vertices = vertices;
@@ -23,9 +25,10 @@ public class Mesh implements IRenderable
     {
         this.triangles.clear();
 
-        for(int i = 0; i < this.indices.size() / 3; i++)
+        for(int i = 0; i < this.indices.size(); i += 3)
         {
             Vector3[] processingVertices = new Vector3[3];
+            
             processingVertices[0] = this.vertices.get(this.indices.get(i));
             processingVertices[1] = this.vertices.get(this.indices.get(i + 1));
             processingVertices[2] = this.vertices.get(this.indices.get(i + 2));
@@ -34,13 +37,29 @@ public class Mesh implements IRenderable
 
             for(int j = 0; j < 3; j++)
             {
-                //Model
+                Matrix4 scale = Matrix4.Scale(new Vector3(1, 1, 1));
+                Matrix4 rotateX = Matrix4.Rotate(0.0f, Vector3.RIGHT);
+                Matrix4 rotateY = Matrix4.Rotate(0.0f, Vector3.DOWN);
+                Matrix4 rotateZ = Matrix4.Rotate(0.0f, Vector3.FRONT);
+                Matrix4 translate = Matrix4.Translate(new Vector3(0, 0, 3));
 
-                //View
+                Matrix4 model = Matrix4.Identity();
+                
+                model = Matrix4.Mult(scale, model);
+                model = Matrix4.Mult(rotateX, model);
+                model = Matrix4.Mult(rotateY, model);
+                model = Matrix4.Mult(rotateZ, model);
+                model = Matrix4.Mult(translate, model);
 
+                Vector4 processingVertex = Vector4.toVector4(processingVertices[j]);
+                processingVertex = Matrix4.Mult(model, processingVertex);
+                processingVertices[j] = Vector4.ToVector3(processingVertex);
+                
                 //Projection
                 Vector3 vertix = processingVertices[j];
-                projectedVertices[j] = new Vector2((vertix.x / vertix.z) * 100, (vertix.y / vertix.z) * 100);
+                projectedVertices[j] = new Vector2(vertix.x / vertix.z, vertix.y / vertix.z);
+                projectedVertices[j].x *= 100;
+                projectedVertices[j].y *= 100;
                 projectedVertices[j] = Vector2.Add(projectedVertices[j], new Vector2(
                     (float)Application.GetFrameBuffer().GetTextureBuffer().getWidth() / 2, 
                     (float)Application.GetFrameBuffer().GetTextureBuffer().getHeight() / 2));
