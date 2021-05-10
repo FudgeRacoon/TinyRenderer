@@ -66,17 +66,8 @@ public class FrameBuffer
         {
             if(color == null)
                 throw new NullPointerException("DrawPixel(int, int, Color) expects a color object but null was passed");
-            else
-            {
-                if(x < 0 || x > this.textureBuffer.getWidth() || y < 0 || y > this.textureBuffer.getHeight())
-                {
-                    System.err.println("[WARNING]: Accessing out of bounds buffer memory");
-                    System.exit(-1);
-                }
-                else
-                    this.pixelBuffer[(y * (int)this.textureBuffer.getWidth()) + x] = Color.RgbToHex(color);
-            }
-                
+            else if(x >= 0 && x < this.textureBuffer.getWidth() && y >= 0 && y < this.textureBuffer.getHeight())
+                this.pixelBuffer[(y * (int)this.textureBuffer.getWidth()) + x] = Color.RgbToHex(color);
         }
         catch(NullPointerException exception)
         {

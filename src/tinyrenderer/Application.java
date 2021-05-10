@@ -2,11 +2,9 @@ package tinyrenderer;
 
 import tinyrenderer.core.Engine;
 import tinyrenderer.core.FrameBuffer;
-import tinyrenderer.geometry.Mesh;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -41,19 +39,8 @@ public class Application extends javafx.application.Application
         window.setResizable(false);
         window.show();
         
-        Button btn = (Button) root.lookup("#incZ");
-        btn.setOnAction(e ->{
-            Mesh.c += 1;
-        });
-
-        Button btn2 = (Button) root.lookup("#decZ");
-        btn2.setOnAction(e ->{
-            Mesh.c -= 1;
-        });
-
-        //Invoke the engine setup and start the program loop
-        Engine.GetInstance().Setup();
-        Engine.GetInstance().Update();
+        //Start the engine
+        Engine.GetInstance().Run();
     }
 
     public static void main(String[] args)

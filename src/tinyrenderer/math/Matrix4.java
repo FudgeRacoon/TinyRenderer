@@ -157,4 +157,17 @@ public class Matrix4
         else
             return m;
     }
+    public static Matrix4 Prespective(float fov, float a, float near, float far)
+    {
+        Matrix4 m = Identity();
+
+        m.n[0][0] = a * ((float)(1 / Math.tan(fov * 0.5)));
+        m.n[1][1] = (float)(1 / Math.tan(fov * 0.5));
+        m.n[2][2] = far / (far - near);
+        m.n[2][3] = (-far * near) / (far - near);
+        m.n[3][2] = 1.0f;
+        m.n[3][3] = 0.0f;
+
+        return m;
+    }
 }

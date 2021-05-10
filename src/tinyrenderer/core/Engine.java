@@ -14,7 +14,7 @@ import javafx.animation.AnimationTimer;
  * methods upon intilization of the window. It is responsible for setting 
  * up objects in the scene and for updating them every frame with a fixed timestep.
  */
-public class Engine implements IApplication
+public class Engine
 {
     private Engine() {}
 
@@ -34,9 +34,8 @@ public class Engine implements IApplication
     }
 
     private Mesh cube;
-
-    @Override
-    public void Setup()
+    
+    private void Setup()
     {
         Vector3[] vertices = 
         {
@@ -82,8 +81,7 @@ public class Engine implements IApplication
         cube = new Mesh(v, i);
     }
 
-    @Override
-    public void Update()
+    private void Update()
     {
         new AnimationTimer()
         {
@@ -94,12 +92,17 @@ public class Engine implements IApplication
 
                 Application.GetFrameBuffer().ClearBuffer(Color.BLACK);
                 
-                //Update objects
                 cube.UpdateMesh();
                 Application.GetFrameBuffer().DrawPolygon(cube, Color.RED, false);
 
                 Application.GetFrameBuffer().RenderBuffer();
             }    
         }.start();
+    }
+
+    public void Run()
+    {
+        this.Setup();
+        this.Update();
     }
 }
