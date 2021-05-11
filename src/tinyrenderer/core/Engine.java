@@ -21,21 +21,12 @@ public class Engine
 
     private static final Engine instance = new Engine();
     private static long prevNanoTime = System.nanoTime();
-    private static double deltaTime;
+    private static double deltaTime = 0.0f;
 
-    private void CalculateDelaTime(long currentNanoTime)
-    {
-        deltaTime = (currentNanoTime - prevNanoTime) / 1000000000.0;
-        prevNanoTime = currentNanoTime;
-    }
-
-    public static Engine GetInstance()
-    {
-        return instance;
-    }
-
-    public Camera camera;
     private Mesh cube;
+    
+    public Camera camera;
+    private float cameraMovementSpeed;
     
     private void Setup()
     {
@@ -81,35 +72,56 @@ public class Engine
             i.add(indices[j]);
 
         cube = new Mesh(v, i);
+
         camera = new Camera();
+        camera.position.z = -2;
+        cameraMovementSpeed = 50.0f;
     }
 
     private void Update()
+    {   
+        if(InputManager.GetKey(KeyCode.D))
+            camera.position.x += cameraMovementSpeed * deltaTime;
+        else if(InputManager.GetKey(KeyCode.A))
+            camera.position.x -= cameraMovementSpeed * deltaTime;
+        else if(InputManager.GetKey(KeyCode.W))
+            camera.position.z += cameraMovementSpeed * deltaTime;
+        else if(InputManager.GetKey(KeyCode.S))
+            camera.position.z -= cameraMovementSpeed * deltaTime;
+
+        cube.UpdateMesh();
+
+        Application.GetFrameBuffer().DrawPolygon(cube, Color.RED, false);
+    }
+
+    public static Engine GetInstance()
     {
-        new AnimationTimer()
-        {
-            @Override
-            public void handle(long currentNanoTime)
-            {
-                CalculateDelaTime(currentNanoTime);
-
-                InputManager.Update();
-
-                Application.GetFrameBuffer().ClearBuffer(Color.BLACK);
-                
-                cube.UpdateMesh();
-                Application.GetFrameBuffer().DrawPolygon(cube, Color.RED, false);
-
-                Application.GetFrameBuffer().RenderBuffer();
-
-                InputManager.PrevUpdate();
-            }    
-        }.start();
+        return instance;
     }
 
     public void Run()
     {
         this.Setup();
-        this.Update();
+        
+        new AnimationTimer()
+        {
+            @Override
+            public void handle(long currentNanoTime)
+            {
+                deltaTime = (currentNanoTime - prevNanoTime) / 1000000000.0;
+                prevNanoTime = currentNanoTime;
+
+                InputManager.Update();
+
+                Application.GetFrameBuffer().ClearBuffer(Color.BLACK);
+                
+                Update();
+
+                Application.GetFrameBuffer().RenderBuffer();
+
+                InputManager.PrevUpdate();
+            }
+            
+        }.start();
     }
 }

@@ -38,7 +38,6 @@ public class Mesh implements IRenderable
             for(int j = 0; j < 3; j++)
             {
                 Vector4 processingVertex = Vector4.toVector4(processingVertices[j]);
-                Engine.GetInstance().camera.position.z = -5;
 
                 //#region Local to World space
                 Matrix4 scale = Matrix4.Scale(new Vector3(1, 1, 1));
