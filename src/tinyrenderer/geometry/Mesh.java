@@ -1,7 +1,7 @@
 package tinyrenderer.geometry;
 
 import tinyrenderer.Application;
-import tinyrenderer.core.Camera;
+import tinyrenderer.core.Engine;
 import tinyrenderer.math.*;
 
 import java.util.ArrayList;
@@ -14,17 +14,12 @@ public class Mesh implements IRenderable
     private ArrayList<Triangle> triangles;
 
     private float c = 0.0f;
-    private static Camera cam;
-
-    public Vector3 pos;
 
     public Mesh(ArrayList<Vector3> vertices, ArrayList<Integer> indices)
     {
         this.vertices = vertices;
         this.indices = indices;
         this.triangles = new ArrayList<Triangle>();
-        pos = new Vector3();
-        cam = new Camera();
     }
 
     public void UpdateMesh()
@@ -43,7 +38,7 @@ public class Mesh implements IRenderable
             for(int j = 0; j < 3; j++)
             {
                 Vector4 processingVertex = Vector4.toVector4(processingVertices[j]);
-                cam.position.z = -5;
+                Engine.GetInstance().camera.position.z = -5;
 
                 //#region Local to World space
                 Matrix4 scale = Matrix4.Scale(new Vector3(1, 1, 1));
@@ -63,11 +58,11 @@ public class Mesh implements IRenderable
                 //#endregion
 
                 //#region World to View space
-                processingVertex = Matrix4.Mult(cam.GetViewMatrix(), processingVertex);
+                processingVertex = Matrix4.Mult(Engine.GetInstance().camera.GetViewMatrix(), processingVertex);
                 //#endregion
 
                 //#region View to Clip space
-                processingVertex = Matrix4.Mult(cam.GetProjection(), processingVertex);
+                processingVertex = Matrix4.Mult(Engine.GetInstance().camera.GetProjectionMatrix(), processingVertex);
                 //#endregion
 
                 //#region Perspective Division

@@ -2,11 +2,10 @@ package tinyrenderer;
 
 import tinyrenderer.core.Engine;
 import tinyrenderer.core.FrameBuffer;
-import tinyrenderer.geometry.Mesh;
+import tinyrenderer.core.InputManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Spinner;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -40,7 +39,10 @@ public class Application extends javafx.application.Application
         window.setScene(scene);
         window.setResizable(false);
         window.show();
-        
+
+        //Initialize the inputmanager
+        InputManager.Init(imageView);
+
         //Start the engine
         Engine.GetInstance().Run();
     }

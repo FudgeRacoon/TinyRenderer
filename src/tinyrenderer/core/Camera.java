@@ -46,7 +46,7 @@ public class Camera
     {
         return Matrix4.LookAt(this.position, Vector3.Add(this.position, Vector3.FRONT), Vector3.DOWN);
     }
-    public Matrix4 GetProjection()
+    public Matrix4 GetProjectionMatrix()
     {
         if(cameraMode == CameraMode.PERSPECTIVE)
             return Matrix4.Prespective

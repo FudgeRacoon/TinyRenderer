@@ -8,6 +8,7 @@ import tinyrenderer.math.Vector3;
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.input.KeyCode;
 
 /**
  * {@code Engine} is the class that every application should call it's
@@ -33,6 +34,7 @@ public class Engine
         return instance;
     }
 
+    public Camera camera;
     private Mesh cube;
     
     private void Setup()
@@ -79,6 +81,7 @@ public class Engine
             i.add(indices[j]);
 
         cube = new Mesh(v, i);
+        camera = new Camera();
     }
 
     private void Update()
@@ -90,12 +93,16 @@ public class Engine
             {
                 CalculateDelaTime(currentNanoTime);
 
+                InputManager.Update();
+
                 Application.GetFrameBuffer().ClearBuffer(Color.BLACK);
                 
                 cube.UpdateMesh();
                 Application.GetFrameBuffer().DrawPolygon(cube, Color.RED, false);
 
                 Application.GetFrameBuffer().RenderBuffer();
+
+                InputManager.PrevUpdate();
             }    
         }.start();
     }
