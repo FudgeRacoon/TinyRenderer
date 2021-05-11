@@ -1,6 +1,7 @@
 package tinyrenderer.geometry;
 
 import tinyrenderer.Application;
+import tinyrenderer.core.Camera;
 import tinyrenderer.math.*;
 
 import java.util.ArrayList;
@@ -12,13 +13,18 @@ public class Mesh implements IRenderable
     private ArrayList<Integer> indices;
     private ArrayList<Triangle> triangles;
 
-    public static float c = 3;
+    private float c = 0.0f;
+    private static Camera cam;
+
+    public Vector3 pos;
 
     public Mesh(ArrayList<Vector3> vertices, ArrayList<Integer> indices)
     {
         this.vertices = vertices;
         this.indices = indices;
         this.triangles = new ArrayList<Triangle>();
+        pos = new Vector3();
+        cam = new Camera();
     }
 
     public void UpdateMesh()
@@ -37,13 +43,14 @@ public class Mesh implements IRenderable
             for(int j = 0; j < 3; j++)
             {
                 Vector4 processingVertex = Vector4.toVector4(processingVertices[j]);
+                cam.position.z = -5;
 
                 //#region Local to World space
                 Matrix4 scale = Matrix4.Scale(new Vector3(1, 1, 1));
                 Matrix4 rotateX = Matrix4.Rotate(0.0f, Vector3.RIGHT);
-                Matrix4 rotateY = Matrix4.Rotate(c += 0.005f, Vector3.DOWN);
+                Matrix4 rotateY = Matrix4.Rotate(c+= 0.005f, Vector3.UP);
                 Matrix4 rotateZ = Matrix4.Rotate(0.0f, Vector3.FRONT);
-                Matrix4 translate = Matrix4.Translate(new Vector3(0, 0, 3));
+                Matrix4 translate = Matrix4.Translate(new Vector3(0, 0, 0));
 
                 Matrix4 model = Matrix4.Identity();
                 model = Matrix4.Mult(scale, model);
@@ -55,16 +62,12 @@ public class Mesh implements IRenderable
                 processingVertex = Matrix4.Mult(model, processingVertex);
                 //#endregion
 
-                //#region View to Clip space
-                Matrix4 projecection = Matrix4.Prespective
-                (
-                    (float)Math.toRadians(45.0f), 
-                    (float)(Application.GetFrameBuffer().GetTextureBuffer().getHeight() / Application.GetFrameBuffer().GetTextureBuffer().getWidth()), 
-                    0.1f, 
-                    1000.0f
-                );
+                //#region World to View space
+                processingVertex = Matrix4.Mult(cam.GetViewMatrix(), processingVertex);
+                //#endregion
 
-                processingVertex = Matrix4.Mult(projecection, processingVertex);
+                //#region View to Clip space
+                processingVertex = Matrix4.Mult(cam.GetProjection(), processingVertex);
                 //#endregion
 
                 //#region Perspective Division

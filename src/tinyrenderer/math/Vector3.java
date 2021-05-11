@@ -21,8 +21,8 @@ public class Vector3 implements Comparable<Vector3>
     }
 
     public static final Vector3 ZERO = new Vector3();
-    public static final Vector3 UP = new Vector3(0, -1, 0);
-    public static final Vector3 DOWN = new Vector3(0, 1, 0);
+    public static final Vector3 UP = new Vector3(0, 1, 0);
+    public static final Vector3 DOWN = new Vector3(0, -1, 0);
     public static final Vector3 RIGHT = new Vector3(1, 0, 0);
     public static final Vector3 LEFT = new Vector3(-1, 0, 0);
     public static final Vector3 FRONT = new Vector3(0, 0, 1);

@@ -2,9 +2,11 @@ package tinyrenderer;
 
 import tinyrenderer.core.Engine;
 import tinyrenderer.core.FrameBuffer;
+import tinyrenderer.geometry.Mesh;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Spinner;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
