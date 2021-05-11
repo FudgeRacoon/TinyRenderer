@@ -13,6 +13,7 @@ enum CameraMode
 public class Camera 
 {
     public Vector3 position;
+    public Vector3 rotation;
 
     private float fov;
     private float near;
