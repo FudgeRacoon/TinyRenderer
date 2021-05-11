@@ -28,12 +28,11 @@ public class Mesh implements IRenderable
         for(int i = 0; i < this.indices.size(); i += 3)
         {
             Vector3[] processingVertices = new Vector3[3];
-            
+            Vector2[] projectedVertices = new Vector2[3];
+
             processingVertices[0] = this.vertices.get(this.indices.get(i));
             processingVertices[1] = this.vertices.get(this.indices.get(i + 1));
             processingVertices[2] = this.vertices.get(this.indices.get(i + 2));
-
-            Vector2[] projectedVertices = new Vector2[3];
 
             for(int j = 0; j < 3; j++)
             {
