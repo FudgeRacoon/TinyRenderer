@@ -2,6 +2,7 @@ package tinyrenderer.core;
 
 import tinyrenderer.Application;
 import tinyrenderer.math.Vector3;
+import tinyrenderer.math.Vector4;
 import tinyrenderer.math.Matrix4;
 
 enum CameraMode
@@ -17,11 +18,13 @@ public class Camera
 
     public Vector3 direction;
 
+    public CameraMode cameraMode;
+
     private float fov;
     private float near;
     private float far;
 
-    public CameraMode cameraMode;
+    private Vector3 front;
 
     public Camera()
     {
@@ -35,6 +38,8 @@ public class Camera
         this.far = 100.0f;
 
         this.cameraMode = CameraMode.PERSPECTIVE;
+
+        this.front = Vector3.FRONT;
     }
     public Camera(Vector3 position, float fov, float near, float far, CameraMode cameraMode)
     {
@@ -48,10 +53,18 @@ public class Camera
         this.far = far;
 
         this.cameraMode = cameraMode;
+
+        this.front = Vector3.FRONT;
     }
 
     public Matrix4 GetViewMatrix()
     {
+        Matrix4 pitch = Matrix4.Rotate(rotation.x, Vector3.RIGHT);
+        Matrix4 yaw = Matrix4.Rotate(rotation.y, Vector3.UP);
+        Matrix4 rotate = Matrix4.Mult(pitch, yaw);
+
+        this.direction = Vector4.ToVector3(Matrix4.Mult(rotate, Vector4.toVector4(this.front)));
+
         return Matrix4.LookAt(this.position, Vector3.Add(this.position, this.direction), Vector3.DOWN);
     }
     public Matrix4 GetProjectionMatrix()

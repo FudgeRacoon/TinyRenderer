@@ -28,6 +28,7 @@ public class Engine
     
     public Camera camera;
     private float cameraMovementSpeed;
+    private float cameraRotationSpeed;
     
     private void Setup()
     {
@@ -74,7 +75,9 @@ public class Engine
 
         camera = new Camera();
         camera.SetFov(25.0f);
+
         cameraMovementSpeed = 25.0f;
+        cameraRotationSpeed = 45.0f;
 
         cube = new Entity("Cube1", v, i);
         cube_2 = new Entity("Cube2", v, i);
@@ -94,17 +97,23 @@ public class Engine
         else if(InputManager.GetKey(KeyCode.A))
             camera.position.x -= cameraMovementSpeed * deltaTime;
         else if(InputManager.GetKey(KeyCode.W))
-            camera.position.z += cameraMovementSpeed * deltaTime;
-        else if(InputManager.GetKey(KeyCode.S))
-            camera.position.z -= cameraMovementSpeed * deltaTime;
-        else if(InputManager.GetKey(KeyCode.UP))
             camera.position.y += cameraMovementSpeed * deltaTime;
-        else if(InputManager.GetKey(KeyCode.DOWN))
+        else if(InputManager.GetKey(KeyCode.S))
             camera.position.y -= cameraMovementSpeed * deltaTime;
+        else if(InputManager.GetKey(KeyCode.UP))
+            camera.position.z += cameraMovementSpeed * deltaTime;
+        else if(InputManager.GetKey(KeyCode.DOWN))
+            camera.position.z -= cameraMovementSpeed * deltaTime;
+        else if(InputManager.GetKey(KeyCode.Z))
+            camera.rotation.y += (float)(cameraRotationSpeed * deltaTime);
+        else if(InputManager.GetKey(KeyCode.X))
+            camera.rotation.y -= (float)(cameraRotationSpeed * deltaTime);
+        
         
         cube.Update(); cube.rotation.y += 1.0f;
         cube_2.Update(); cube_2.rotation.x += 1.0f;
         cube_3.Update(); cube_3.rotation.y -= 1.0f;
+
         Application.GetFrameBuffer().DrawPolygon(cube, Color.RED, false);
         Application.GetFrameBuffer().DrawPolygon(cube_2, Color.BLUE, false);
         Application.GetFrameBuffer().DrawPolygon(cube_3, Color.Yellow, false);

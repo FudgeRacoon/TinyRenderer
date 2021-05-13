@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javafx.scene.Node;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.KeyCode;
 import tinyrenderer.math.Vector2;
