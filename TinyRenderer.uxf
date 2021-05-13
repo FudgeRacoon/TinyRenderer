@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <help_text/>
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>6</x>
+      <y>72</y>
+      <w>258</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.core
+FrameBuffer
+--
+-pixelBuffer : int[]
+-textureBuffer : WritableImage 
+-pixelWriter : PixelWriter
+-FRAME_BUFFER_SIZE : float 
+--
++FrameBuffer()
+--
++RenderBuffer() : void
++DrawPixel(int x, int y, Color color) : void 
++DrawLine(float x1, float y1, float x2, float y2, Color color) : void 
++DrawPolygon(IRenderable polygon, Color color, boolean fill) : void
++SwapBuffer() : void
++ClearBuffer(Color color) : void
++GetTextureBuffer() : Image</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>306</x>
+      <y>72</y>
+      <w>168</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.core
+Engine
+--
+_-instance : Engine_
+_-prevNanoTime : long_
+_-deltaTime : double_
+--
+-Engine()
+_+GetInstance() : Engine_
+--
+-Setup() : void
+-Update() : void
++Run() : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1032</x>
+      <y>558</y>
+      <w>210</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.math
+Color
+--
++r : int
++g : int
++b : int
++a : int
+--
++WHITE : Color 
++BLACK : Color 
++RED : Color 
++BLUE : Color 
++GREEN : Color  
++PINK : Color 
++CYAN : Color 
++PURPLE : Color 
++Yellow : Color 
+--
++Color()
++Color(int r, int g, int b)
++Color(int r, int g, int b, int a)
+--
+_+RgbToHex(Color color) : int_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>780</x>
+      <y>558</y>
+      <w>246</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.math
+Matrix4
+--
+_-ROWS : int_
+_-COLUMNS : int_
+-n : float[][]
+--
++Matrix4()
++Matrix4(float n00, float n01, float n02, float n03,
+               float n10, float n11, float n12, float n13,
+               float n20, float n21, float n22, float n23,
+               float n30, float n31, float n32, float n33)
++Matrix4(Vector4 v1, Vector4 v2, Vector4 v3, Vector4 v4)        
+--
+_+Get(int row, int column) : float_
+_+Add(Matrix4 m1, Matrix4 m2) : Matrix4_
+_+Sub(Matrix4 m1, Matrix4 m2) : Matrix4_
+_+Mult(Matrix4 m1, Matrix4 m2) : Matrix4_
+_+Mult(Matrix4 m, Vector4 v) : Vector4_
+--
+_+Identity() : Matrix4_
+_+Translate(Vector3 direction) : Matrix4_
+_+Scale(Vector3 scaleFactor) : Matrix4_
+_+Rotate(float angle, Vector3 axis) : Matrix4_
+_+Prespective(float fov, float a, float near, float far) : Matrix4_
+_+LookAt(Vector3 position, Vector3 target, Vector3 up) : Matrix4_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>726</x>
+      <y>294</y>
+      <w>192</w>
+      <h>246</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.math
+Vector2
+--
++x : float
++y : float
+--
+_+ZERO : Vector2_
+_+UP : Vector2_
+_+DOWN : Vector2_
+_+RIGHT : Vector2_
+_+LEFT : Vector2_
+--
+_+Add(Vector2 v1, Vector2 v2) : Vector2_
+_+Sub(Vector2 v1, Vector2 v2) : Vector2_
+_+Mult(Vector2 v, float value) : Vector2_
+_+Negate(Vector2 v) : Vector2_
+--
+_+Magnitude(Vector2 v) : Vector2_
+_+Normalize(Vector2 v) : Vector2_
+_+Dot(Vector2 v1, Vector2 v2) : Vector2_
+_+Distance(Vector2 v1, Vector2 v2) : Vector2_
+_+Angle(Vector2 v1, Vector2 v2) : Vector2_
+_+Lerp(Vector2 v1, Vector2 v2, float t) : Vector2_
+--
++compareTo(Vector2 v) : int &lt;&lt;override&gt;&gt;
++toString() : String &lt;&lt;override&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>972</x>
+      <y>192</y>
+      <w>126</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+Comparable
+--
++compareTo(Object o) : int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>930</x>
+      <y>294</y>
+      <w>216</w>
+      <h>246</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.math
+Vector3
+--
++x : float
++y : float
++z : float
+--
+_+ZERO : Vector3_
+_+UP : Vector3_
+_+DOWN : Vector3_
+_+RIGHT : Vector3_
+_+LEFT : Vector3_
+--
+_+Add(Vector3 v1, Vector3 v2) : Vector3_
+_+Sub(Vector3 v1, Vector3 v2) : Vector3_
+_+Mult(Vector3 v, float value) : Vector3_
+_+Negate(Vector3 v) : Vector3_
+--
+_+Magnitude(Vector3 v) : Vector3_
+_+Normalize(Vector3 v) : Vector3_
+_+Dot(Vector3 v1, Vector3 v2) : Vector3_
+_+Cross(Vector3 v1, Vector3 v2) : Vector3_
+_+Distance(Vector3 v1, Vector3 v2) : Vector3_
+_+Angle(Vector3 v1, Vector3 v2) : Vector3_
+_+Lerp(Vector3 v1, Vector3 v2, float t) : Vector3_
+--
++compareTo(Vector3 v) : int &lt;&lt;override&gt;&gt;
++toString() : String &lt;&lt;override&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1158</x>
+      <y>294</y>
+      <w>192</w>
+      <h>246</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.math
+Vector4
+--
++x : float
++y : float
++z : float
++w : float
+--
+_+Add(Vector4 v1, Vector4 v2) : Vector4_
+_+Sub(Vector4 v1, Vector4 v2) : Vector4_
+_+Mult(Vector4 v, float value) : Vector4_
+_+Negate(Vector4 v) : Vector4_
+--
+_+ToVector3(Vector4 v) : Vector3_
+_+toVector4(Vector3 v) : Vector4_
+--
++toString() : String &lt;&lt;override&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>228</x>
+      <y>462</y>
+      <w>132</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+Package::tinyrenderer.geometry
+IRenderable
+--
++RenderNoFill(Color color) : void
++RenderFill(Color color) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>324</x>
+      <y>570</y>
+      <w>180</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.geometry
+Triangle
+--
+-a : Vector2
+-b : Vector2
+-c : Vector2
+--
++Triangle(Vector2 a, Vector2 b, Vector2 c)
+--
++RenderNoFill(Color color) &lt;&lt;override&gt;&gt;
++RenderFill(Color color) &lt;&lt;override&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>42</x>
+      <y>570</y>
+      <w>270</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.geometry
+Mesh
+--
+#vertices : ArrayList&lt;Vector3&gt;
+#indices : ArrayList&lt;Integer&gt;
+-triangles : ArrayList&lt;Triangle&gt;
+--
++Mesh()
++Mesh(ArrayList&lt;Vector3&gt; vertices, ArrayList&lt;Integer&gt; indicies)
+--
+-BackFaceCull(Vector3 a, Vector3 b, Vector3 c) : boolean
+--
+#UpdateMesh(Vector3 position, Vector3 rotation, Vector3 scale) : void
+--
++RenderNoFill(Color color) &lt;&lt;override&gt;&gt;
++RenderFill(Color color) &lt;&lt;override&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>486</x>
+      <y>72</y>
+      <w>174</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.core
+InputManager
+--
+_-node : Node_
+_-keyState : ArrayList&lt;String&gt;_
+_-prevKeyState : ArrayList&lt;String&gt;_
+_-mousePosition : Vector2_
+--
+_+Init(Node sceneNode) : void_
+_+Update() : void_
+_+PrevUpdate() : void_
+--
+_+GetKey(KeyCode keyCode) : boolean_
+_+GetKeyDown(KeyCode keyCode) : boolean_
+_+GetKeyUp(KeyCode keyCode) : boolean_
+_+GetMousePosition() : boolean_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>6</x>
+      <y>762</y>
+      <w>246</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.core
+Entity
+--
+-name : String
++position : Vector3
++rotation : Vector3
++scale : Vector3
++color : Color
+--
++Entity(ArrayList&lt;Vector3&gt; vertices, ArrayList&lt;Integer&gt; indices)
+--
++Update() : void
+--
++GetName() : String
++SetName(String value) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>336</y>
+      <w>300</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.core
+Camera
+--
++position : Vector3 
++rotation : Vector3 
++direction : Vector3
++cameraMode : CameraMode 
+-fov : float 
+-near : float 
+-far : float 
+--
++Camera()
++Camera(Vector3 position, float fov, float near, float far, CameraMode mode)
+--
++GetViewMatrix() : Matrix4
++GetProjectionMatrix() : Matrix4
+--
++GetFov() : float
++SetFov(float value) : void
++GetNearPlane() : float
++SetNearPlane(float value) : void
++GetFarPlane() : float
++SetFarPlane(float value) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>504</x>
+      <y>252</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enumuration&gt;&gt;
+Package::tinyrenderer.core
+CameraMode
+--
+PERSPECTIVE
+ORTHOGRAPHIC</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>150</x>
+      <y>264</y>
+      <w>210</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>Application
+--
+_-window : Stage_
+_-root : Parent_
+_-scene : Scene_
+_-frameBuffer : FrameBuffer_
+_-WIDTH : int_
+_-HEIGHT : int_
+--
+_+main(String[] args) : void_
++start(Stage stage) : void &lt;&lt;override&gt;&gt;
+--
+_-GetWidth() : int_
+_-GetHeight() : int_
+_-GetWindow() : Stage_
+_-Getroot() : Parent_
+_-GetScene() : Scene_
+_-GetFrameBuffer() : FrameBuffer_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>120</x>
+      <y>228</y>
+      <w>138</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>210.0;60.0;210.0;30.0;10.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>264</x>
+      <y>228</y>
+      <w>132</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;30.0;200.0;30.0;200.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>294</x>
+      <y>522</y>
+      <w>126</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;190.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>174</x>
+      <y>522</y>
+      <w>114</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>170.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>126</x>
+      <y>726</y>
+      <w>54</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>816</x>
+      <y>228</y>
+      <w>216</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>340.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1032</x>
+      <y>228</y>
+      <w>18</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>228</y>
+      <w>216</w>
+      <h>78</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;340.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>558</x>
+      <y>306</y>
+      <w>18</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>396</x>
+      <y>228</y>
+      <w>36</w>
+      <h>228</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;360.0;40.0;360.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>24</x>
+      <y>462</y>
+      <w>192</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.geometry
+ObjParser
+--
+_-directoryLocatioin : String_
+--
+-ObjParse()
+--
+_+LoadMesh(String filename) : Mesh_
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>672</x>
+      <y>186</y>
+      <w>204</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.core
+Controller
+--
+-entities : EntityManager
+--
++OnButtonClick(ActionEvent event) : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>672</x>
+      <y>72</y>
+      <w>180</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>Package::tinyrenderer.core
+EntityManager
+--
+_-entities : TreeMap&lt;String,Entity&gt;_
+--
+-EntityManager()
+--
+_+AddEntity(Entity entity) : void_
+_+RemoveEntity(String entity) : boolean_
+_+GetEntity(String entity) : boolean_
+_+UpdateEntities() : void_
+_+ReleaseEntities() : void_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>690</x>
+      <y>6</y>
+      <w>66</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>halign=center
+Author
+--
+Karim Hisham
+18100170
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

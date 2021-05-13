@@ -14,8 +14,8 @@
             "type": "java",
             "name": "Launch Application",
             "request": "launch",
-            "mainClass": "tinyrenderer.Application",
             "vmArgs": "--module-path lib --add-modules javafx.fxml,javafx.controls,javafx.graphics",
+            "mainClass": "tinyrenderer.Application",
             "projectName": "TinyRenderer_d0e54329"
         }
     ]

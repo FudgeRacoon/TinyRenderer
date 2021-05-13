@@ -7,7 +7,7 @@ public class Matrix4
 {
     private static final int ROWS = 4;
     private static final int COLOUMNS = 4;
-    private float[][] n = new float[4][4];
+    private float[][] n = new float[ROWS][COLOUMNS];
 
     public Matrix4()
     {

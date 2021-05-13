@@ -9,12 +9,11 @@ import java.util.Iterator;
 
 public class Mesh implements IRenderable
 {
-    private ArrayList<Vector3> vertices;
-    private ArrayList<Integer> indices;
+    protected ArrayList<Vector3> vertices;
+    protected ArrayList<Integer> indices;
     private ArrayList<Triangle> triangles;
 
-    private float c = 0.0f;
-
+    public Mesh() {}
     public Mesh(ArrayList<Vector3> vertices, ArrayList<Integer> indices)
     {
         this.vertices = vertices;
@@ -22,7 +21,7 @@ public class Mesh implements IRenderable
         this.triangles = new ArrayList<Triangle>();
     }
 
-    public void UpdateMesh()
+    protected void UpdateMesh(Vector3 position, Vector3 rotation, Vector3 scale)
     {
         this.triangles.clear();
 
@@ -40,14 +39,14 @@ public class Mesh implements IRenderable
                 Vector4 processingVertex = Vector4.toVector4(processingVertices[j]);
 
                 //#region Local to World space
-                Matrix4 scale = Matrix4.Scale(new Vector3(1, 1, 1));
-                Matrix4 rotateX = Matrix4.Rotate(0.0f, Vector3.RIGHT);
-                Matrix4 rotateY = Matrix4.Rotate(c+= 0.005f, Vector3.UP);
-                Matrix4 rotateZ = Matrix4.Rotate(0.0f, Vector3.FRONT);
-                Matrix4 translate = Matrix4.Translate(new Vector3(0, 0, 0));
+                Matrix4 scaleMatrix = Matrix4.Scale(scale);
+                Matrix4 rotateX = Matrix4.Rotate(rotation.x, Vector3.RIGHT);
+                Matrix4 rotateY = Matrix4.Rotate(rotation.y, Vector3.UP);
+                Matrix4 rotateZ = Matrix4.Rotate(rotation.z, Vector3.FRONT);
+                Matrix4 translate = Matrix4.Translate(position);
 
                 Matrix4 model = Matrix4.Identity();
-                model = Matrix4.Mult(scale, model);
+                model = Matrix4.Mult(scaleMatrix, model);
                 model = Matrix4.Mult(rotateX, model);
                 model = Matrix4.Mult(rotateY, model);
                 model = Matrix4.Mult(rotateZ, model);
@@ -63,6 +62,8 @@ public class Mesh implements IRenderable
                 //#region View to Clip space
                 processingVertex = Matrix4.Mult(Engine.GetInstance().camera.GetProjectionMatrix(), processingVertex);
                 //#endregion
+                
+                processingVertices[j] = Vector4.ToVector3(processingVertex);
 
                 //#region Perspective Division
                 if(processingVertex.w != 0.0f)
@@ -82,7 +83,8 @@ public class Mesh implements IRenderable
                 //#endregion
             }
 
-            this.triangles.add(new Triangle(projectedVertices[0], projectedVertices[1], projectedVertices[2]));
+            if(!Utilities.BackFaceCull(processingVertices[0], processingVertices[1], processingVertices[2]))
+                this.triangles.add(new Triangle(projectedVertices[0], projectedVertices[1], projectedVertices[2]));
         }
     }
 

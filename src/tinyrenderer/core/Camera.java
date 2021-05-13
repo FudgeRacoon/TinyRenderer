@@ -15,6 +15,8 @@ public class Camera
     public Vector3 position;
     public Vector3 rotation;
 
+    public Vector3 direction;
+
     private float fov;
     private float near;
     private float far;
@@ -24,6 +26,9 @@ public class Camera
     public Camera()
     {
         this.position = new Vector3();
+        this.rotation = new Vector3();
+
+        this.direction = Vector3.FRONT;
 
         this.fov = 60.0f;
         this.near = 0.1f;
@@ -34,7 +39,10 @@ public class Camera
     public Camera(Vector3 position, float fov, float near, float far, CameraMode cameraMode)
     {
         this.position = position;
-        
+        this.rotation = new Vector3();
+
+        this.direction = Vector3.FRONT;
+
         this.fov = fov;
         this.near = near;
         this.far = far;
@@ -44,7 +52,7 @@ public class Camera
 
     public Matrix4 GetViewMatrix()
     {
-        return Matrix4.LookAt(this.position, Vector3.Add(this.position, Vector3.FRONT), Vector3.DOWN);
+        return Matrix4.LookAt(this.position, Vector3.Add(this.position, this.direction), Vector3.DOWN);
     }
     public Matrix4 GetProjectionMatrix()
     {
