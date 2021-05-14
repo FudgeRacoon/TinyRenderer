@@ -102,6 +102,12 @@ public class Mesh implements IRenderable
     @Override
     public void RenderFill(Color color)
     {
-
+        Iterator<Triangle> it = this.triangles.iterator();
+        while(it.hasNext())
+        {
+            Triangle triangle = it.next();
+            triangle.RenderFill(color);
+            triangle.RenderNoFill(Color.BLACK);
+        }
     }
 }

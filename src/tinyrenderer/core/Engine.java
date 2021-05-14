@@ -23,8 +23,6 @@ public class Engine
     private static double deltaTime = 0.0f;
 
     private Entity cube;
-    private Entity cube_2;
-    private Entity cube_3;
     
     public Camera camera;
     private float cameraMovementSpeed;
@@ -80,14 +78,6 @@ public class Engine
         cameraRotationSpeed = 45.0f;
 
         cube = new Entity("Cube1", v, i);
-        cube_2 = new Entity("Cube2", v, i);
-        cube_3 = new Entity("Cube3", v, i);
-        
-        cube_2.position.x = 10;
-        cube_2.position.z = 5;
-
-        cube_3.position.x = -10;
-        cube_3.position.z = 3;
     }
 
     private void Update()
@@ -110,12 +100,8 @@ public class Engine
             camera.rotation.y -= (float)(cameraRotationSpeed * deltaTime);
         
         cube.Update(); cube.rotation.y += 1.0f;
-        cube_2.Update(); cube_2.rotation.x += 1.0f;
-        cube_3.Update(); cube_3.rotation.y -= 1.0f;
 
-        Application.GetFrameBuffer().DrawPolygon(cube, Color.RED, false);
-        Application.GetFrameBuffer().DrawPolygon(cube_2, Color.BLUE, false);
-        Application.GetFrameBuffer().DrawPolygon(cube_3, Color.Yellow, false); 
+        Application.GetFrameBuffer().DrawPolygon(cube, Color.RED, true);
     }
 
     public static Engine GetInstance()
