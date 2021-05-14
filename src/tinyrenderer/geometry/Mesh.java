@@ -74,7 +74,7 @@ public class Mesh implements IRenderable
                 }
                 //#endregion
 
-                //#region Scale and position the mesh in center of scene
+                //#region Window to Viewport
                 projectedVertices[j] = new Vector2(processingVertex.x, processingVertex.y);
                 projectedVertices[j].x *= 100;
                 projectedVertices[j].y *= 100;

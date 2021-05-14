@@ -82,7 +82,7 @@ public class Engine
         cube = new Entity("Cube1", v, i);
         cube_2 = new Entity("Cube2", v, i);
         cube_3 = new Entity("Cube3", v, i);
-
+        
         cube_2.position.x = 10;
         cube_2.position.z = 5;
 
@@ -109,15 +109,13 @@ public class Engine
         else if(InputManager.GetKey(KeyCode.X))
             camera.rotation.y -= (float)(cameraRotationSpeed * deltaTime);
         
-        
         cube.Update(); cube.rotation.y += 1.0f;
         cube_2.Update(); cube_2.rotation.x += 1.0f;
         cube_3.Update(); cube_3.rotation.y -= 1.0f;
 
         Application.GetFrameBuffer().DrawPolygon(cube, Color.RED, false);
         Application.GetFrameBuffer().DrawPolygon(cube_2, Color.BLUE, false);
-        Application.GetFrameBuffer().DrawPolygon(cube_3, Color.Yellow, false);
-         
+        Application.GetFrameBuffer().DrawPolygon(cube_3, Color.Yellow, false); 
     }
 
     public static Engine GetInstance()
