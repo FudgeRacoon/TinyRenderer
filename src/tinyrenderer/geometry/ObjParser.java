@@ -40,9 +40,9 @@ public class ObjParser
             {
                 data = line.split(" ");
 
-                int a = Character.getNumericValue(data[1].charAt(0));
-                int b = Character.getNumericValue(data[2].charAt(0));
-                int c = Character.getNumericValue(data[3].charAt(0));
+                int a = Integer.parseInt(data[1].split("/")[0]);
+                int b = Integer.parseInt(data[2].split("/")[0]);
+                int c = Integer.parseInt(data[3].split("/")[0]);
 
                 indices.add(a);
                 indices.add(b);

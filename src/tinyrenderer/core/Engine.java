@@ -80,7 +80,7 @@ public class Engine
         else if(InputManager.GetKey(KeyCode.RIGHT))
             camera.rotation.y -= (float)(cameraRotationSpeed * deltaTime);
         
-        cube.Update(); cube.rotation.y += 1.0f; cube.rotation.x += 1.0f;
+        cube.Update(); //cube.rotation.y += 1.0f; cube.rotation.x += 1.0f;
 
         Application.GetFrameBuffer().DrawPolygon(cube, Color.WHITE, false);
     }
