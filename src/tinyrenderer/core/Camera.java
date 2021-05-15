@@ -64,7 +64,6 @@ public class Camera
         Matrix4 rotate = Matrix4.Mult(pitch, yaw);
 
         this.direction = Vector4.ToVector3(Matrix4.Mult(rotate, Vector4.toVector4(this.front)));
-
         return Matrix4.LookAt(this.position, Vector3.Add(this.position, this.direction), Vector3.DOWN);
     }
     public Matrix4 GetProjectionMatrix()

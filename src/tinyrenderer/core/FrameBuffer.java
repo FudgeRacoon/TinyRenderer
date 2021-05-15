@@ -19,6 +19,7 @@ public class FrameBuffer
     private PixelWriter pixelWriter;
 
     private final float FRAME_BUFFER_SIZE = 0.75f;
+    private final Color DEFAULT_CLEAR_COLOR = new Color(56, 56, 56);
 
     public FrameBuffer()
     {
@@ -163,25 +164,12 @@ public class FrameBuffer
      * in the buffer with a specific color.
      * 
      * @param color The color to fill the entire framebuffer with
-     * 
-     * @throws NullPointerException
      */
-    public void ClearBuffer(Color color)
+    public void ClearBuffer()
     {
-        try
-        {
-            if(color == null)
-                throw new NullPointerException("ClearBuffer(Color) expects a color object but null was passed");
-            else
-                for(int y = 0; y < this.textureBuffer.getHeight(); y++)
-                    for(int x = 0; x < this.textureBuffer.getWidth(); x++)
-                        this.pixelBuffer[(y * (int)this.textureBuffer.getWidth()) + x] = Color.RgbToHex(color);
-        }
-        catch(NullPointerException exception)
-        {
-            System.err.println(exception.getMessage());
-            System.exit(-1);
-        }
+        for(int y = 0; y < this.textureBuffer.getHeight(); y++)
+            for(int x = 0; x < this.textureBuffer.getWidth(); x++)
+                this.pixelBuffer[(y * (int)this.textureBuffer.getWidth()) + x] = Color.RgbToHex(DEFAULT_CLEAR_COLOR);
     }
 
     /**
