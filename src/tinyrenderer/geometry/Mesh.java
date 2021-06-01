@@ -5,13 +5,14 @@ import tinyrenderer.core.Engine;
 import tinyrenderer.math.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-public class Mesh implements IRenderable
+public class Mesh
 {
-    protected ArrayList<Vector3> vertices;
-    protected ArrayList<Integer> indices;
+    private ArrayList<Vector3> vertices;
+    private ArrayList<Integer> indices;
     private ArrayList<Triangle> triangles;
+
+    private final Vector3 lightDirection = Vector3.FRONT;
 
     public Mesh() {}
     public Mesh(ArrayList<Vector3> vertices, ArrayList<Integer> indices)
@@ -21,7 +22,7 @@ public class Mesh implements IRenderable
         this.triangles = new ArrayList<Triangle>();
     }
 
-    protected void UpdateMesh(Vector3 position, Vector3 rotation, Vector3 scale)
+    public void UpdateMesh(Vector3 position, Vector3 rotation, Vector3 scale)
     {
         this.triangles.clear();
 
@@ -38,7 +39,7 @@ public class Mesh implements IRenderable
             {
                 Vector4 processingVertex = Vector4.toVector4(processingVertices[j]);
 
-                //#region Local to World space
+                //#region Local to World space using model matrix
                 Matrix4 scaleMatrix = Matrix4.Scale(scale);
                 Matrix4 rotateX = Matrix4.Rotate(rotation.x, Vector3.RIGHT);
                 Matrix4 rotateY = Matrix4.Rotate(rotation.y, Vector3.UP);
@@ -55,11 +56,11 @@ public class Mesh implements IRenderable
                 processingVertex = Matrix4.Mult(model, processingVertex);
                 //#endregion
 
-                //#region World to View space
+                //#region World to View space using view matrix
                 processingVertex = Matrix4.Mult(Engine.GetInstance().camera.GetViewMatrix(), processingVertex);
                 //#endregion
 
-                //#region View to Clip space
+                //#region View to Clip space using projection matrix
                 processingVertex = Matrix4.Mult(Engine.GetInstance().camera.GetProjectionMatrix(), processingVertex);
                 //#endregion
                 
@@ -83,30 +84,20 @@ public class Mesh implements IRenderable
                 //#endregion
             }
 
+            //#region Flat-Shading
+            Vector3 normal = Utilities.GetFaceNormal(processingVertices[0], processingVertices[1], processingVertices[2]);
+            float colorIntensity = Vector3.Dot(lightDirection, normal);
+            //#endregion
+
+            //#region Back-Face Culling
             if(!Utilities.BackFaceCull(processingVertices[0], processingVertices[1], processingVertices[2]))
-                this.triangles.add(new Triangle(projectedVertices[0], projectedVertices[1], projectedVertices[2]));
+                this.triangles.add(new Triangle(projectedVertices[0], projectedVertices[1], projectedVertices[2], colorIntensity));
+            //#endregion
         }
     }
 
-    @Override
-    public void RenderNoFill(Color color)
+    public ArrayList<Triangle> GetTriangles()
     {
-        Iterator<Triangle> it = this.triangles.iterator();
-        while(it.hasNext())
-        {
-            Triangle triangle = it.next();
-            triangle.RenderNoFill(color);
-        }
-    }
-
-    @Override
-    public void RenderFill(Color color)
-    {
-        Iterator<Triangle> it = this.triangles.iterator();
-        while(it.hasNext())
-        {
-            Triangle triangle = it.next();
-            triangle.RenderFill(color);
-        }
+        return this.triangles;
     }
 }

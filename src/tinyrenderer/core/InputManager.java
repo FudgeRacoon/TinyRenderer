@@ -21,6 +21,7 @@ public class InputManager
     public static void Init(Node sceneNode)
     {
         node = sceneNode; node.setFocusTraversable(true);
+        
         keyState = new ArrayList<String>();
         prevKeyState = new ArrayList<String>();
         mousePosition = new Vector2();

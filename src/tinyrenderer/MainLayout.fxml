@@ -1,11 +1,33 @@
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.ImageView?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml">
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="tinyrenderer.core.Controller">
+    <top>
+        <MenuBar>
+            <Menu text="File">
+               
+            </Menu>
+        </MenuBar>
+    </top>
+    
     <left>
-       
+        <ListView fx:id="entityList"  onContextMenuRequested="#HandleContextMenu"> 
+            <contextMenu>
+                <ContextMenu fx:id="listViewContextMenu">
+                    <items>
+                        <MenuItem text="Add Entity" onAction="#HandleAddEntity"/>
+                        <MenuItem text="Rename Entity"/>
+                        <MenuItem text="Remove Entity"/>
+                    </items>
+                </ContextMenu>
+            </contextMenu>
+        </ListView>
     </left>
    
     <center>

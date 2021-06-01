@@ -7,6 +7,16 @@ public class Utilities
 {   
     private Utilities() {}
 
+    public static float Clamp(float value, float min, float max)
+    {
+        if(value < min)
+            return min;
+        else if(value > max)
+            return max;
+        else
+            return value;
+    }
+
     public static Vector3 GetFaceNormal(Vector3 a, Vector3 b, Vector3 c)
     {
         Vector3 ab = Vector3.Sub(b, a);

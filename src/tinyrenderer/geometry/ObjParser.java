@@ -5,14 +5,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-import tinyrenderer.core.Entity;
 import tinyrenderer.math.Vector3;
 
 public class ObjParser 
 {
     private ObjParser() {}
     
-    public static Entity LoadObj(String filename) throws Exception
+    public static Mesh LoadObj(String filename) throws Exception
     {
         File objFile = new File("res//obj//" + filename);
         FileReader reader = new FileReader(objFile);
@@ -53,6 +52,6 @@ public class ObjParser
         bufferedReader.close();
         reader.close();
         
-        return new Entity("#", vertices, indices);
+        return new Mesh(vertices, indices);
     }
 }

@@ -18,13 +18,13 @@ public class FrameBuffer
     private WritableImage textureBuffer;
     private PixelWriter pixelWriter;
 
-    private final float FRAME_BUFFER_SIZE = 0.75f;
+    private final float FRAME_BUFFER_WIDTH = 0.75f;
     private final Color DEFAULT_CLEAR_COLOR = new Color(56, 56, 56);
 
     public FrameBuffer()
     {
-        this.pixelBuffer = new int[(int)(Application.GetWidth() * FRAME_BUFFER_SIZE) * Application.GetHeight()];
-        this.textureBuffer = new WritableImage((int)(Application.GetWidth() * FRAME_BUFFER_SIZE), Application.GetHeight());
+        this.pixelBuffer = new int[(int)(Application.GetWidth() * FRAME_BUFFER_WIDTH) * Application.GetHeight()];
+        this.textureBuffer = new WritableImage((int)(Application.GetWidth() * FRAME_BUFFER_WIDTH), Application.GetHeight());
         this.pixelWriter = textureBuffer.getPixelWriter();
     }
 

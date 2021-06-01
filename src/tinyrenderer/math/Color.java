@@ -1,5 +1,7 @@
 package tinyrenderer.math;
 
+import tinyrenderer.geometry.Utilities;
+
 public class Color 
 {
     public int r, g, b, a;
@@ -35,6 +37,16 @@ public class Color
     public static final Color CYAN = new Color(0, 255, 255);
     public static final Color PURPLE = new Color(128, 0, 128);
     public static final Color Yellow = new Color(255, 255, 0);
+
+    public static Color Mult(Color color, float value)
+    {
+        return new Color
+        (
+            (int)Utilities.Clamp(color.r * value, 0, 255),
+            (int)Utilities.Clamp(color.g * value, 0, 255),
+            (int)Utilities.Clamp(color.b * value, 0, 255)
+        );
+    }
 
     /**
      * Converts a RGB {@code color}  to it's hexadecimal equivalent.

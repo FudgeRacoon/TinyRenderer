@@ -1,11 +1,6 @@
 package tinyrenderer.core;
 
 import tinyrenderer.Application;
-import tinyrenderer.geometry.ObjParser;
-import tinyrenderer.math.Color;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
@@ -18,47 +13,20 @@ import javafx.scene.input.KeyCode;
 public class Engine
 {
     private Engine() {}
-
     private static final Engine instance = new Engine();
+    
     private static long prevNanoTime = System.nanoTime();
     private static double deltaTime = 0.0f;
 
-    private Entity cube;
-    
     public Camera camera;
-    private float cameraMovementSpeed;
-    private float cameraRotationSpeed;
+    private final float cameraMovementSpeed = 50.0f;
+    private final float cameraRotationSpeed = 80.0f;
     
     private void Setup()
     {
         camera = new Camera();
         camera.SetFov(20.0f);
-
-        cameraMovementSpeed = 25.0f;
-        cameraRotationSpeed = 45.0f;
-
-        try
-        {
-            cube = ObjParser.LoadObj("cube.obj");
-        }
-        catch(FileNotFoundException exception)
-        {
-            System.err.println(exception.getMessage());
-            exception.printStackTrace();
-            System.exit(-1);
-        }
-        catch(IOException exception)
-        {
-            System.err.println(exception.getMessage());
-            exception.printStackTrace();
-            System.exit(-1);
-        }
-        catch(Exception exception)
-        {
-            System.err.println(exception.getMessage());
-            exception.printStackTrace();
-            System.exit(-1);
-        }
+        camera.position.z = -5.0f;
     }
 
     private void Update()
@@ -72,17 +40,13 @@ public class Engine
         else if(InputManager.GetKey(KeyCode.S))
             camera.position.z -= cameraMovementSpeed * deltaTime;
         else if(InputManager.GetKey(KeyCode.UP))
-            camera.rotation.x += cameraRotationSpeed * deltaTime;
+            camera.position.y += cameraMovementSpeed * deltaTime;
         else if(InputManager.GetKey(KeyCode.DOWN))
-            camera.rotation.x -= cameraRotationSpeed * deltaTime;
+            camera.position.y -= cameraMovementSpeed * deltaTime;
         else if(InputManager.GetKey(KeyCode.LEFT))
             camera.rotation.y += (float)(cameraRotationSpeed * deltaTime);
         else if(InputManager.GetKey(KeyCode.RIGHT))
             camera.rotation.y -= (float)(cameraRotationSpeed * deltaTime);
-        
-        cube.Update(); //cube.rotation.y += 1.0f; cube.rotation.x += 1.0f;
-
-        Application.GetFrameBuffer().DrawPolygon(cube, Color.WHITE, false);
     }
 
     public static Engine GetInstance()

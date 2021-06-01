@@ -7,12 +7,15 @@ import tinyrenderer.math.Vector2;
 public class Triangle implements IRenderable
 {
     private Vector2 a, b, c;
+    public float colorIntestiy;
 
-    public Triangle(Vector2 a, Vector2 b, Vector2 c)
+    public Triangle(Vector2 a, Vector2 b, Vector2 c, float colorIntesity)
     {
         this.a = a;
         this.b = b;
         this.c = c;
+
+        this.colorIntestiy = colorIntesity;
     }
 
     private float CrossProduct(Vector2 v1, Vector2 v2)

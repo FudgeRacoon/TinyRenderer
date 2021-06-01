@@ -24,7 +24,7 @@ public class Camera
     private float near;
     private float far;
 
-    private Vector3 front;
+    private final Vector3 front = Vector3.FRONT;
 
     public Camera()
     {
@@ -38,8 +38,6 @@ public class Camera
         this.far = 100.0f;
 
         this.cameraMode = CameraMode.PERSPECTIVE;
-
-        this.front = Vector3.FRONT;
     }
     public Camera(Vector3 position, float fov, float near, float far, CameraMode cameraMode)
     {
@@ -53,8 +51,6 @@ public class Camera
         this.far = far;
 
         this.cameraMode = cameraMode;
-
-        this.front = Vector3.FRONT;
     }
 
     public Matrix4 GetViewMatrix()

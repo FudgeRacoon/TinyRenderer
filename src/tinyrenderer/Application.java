@@ -24,7 +24,7 @@ public class Application extends javafx.application.Application
     {
         //Init the main window layout
         root = FXMLLoader.load(getClass().getResource("MainLayout.fxml"));
-        
+
         //Init window scene
         scene = new Scene(root, WIDTH, HEIGHT);
         
